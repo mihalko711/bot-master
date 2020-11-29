@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <!-- Global site tag (gtag.js) - Google Ads: 594557156 -->
+    <script async="" src="pharmacy-external-metrics-frame-v5_data/js.js"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'AW-594557156');
+    </script>
+</head>
+<body>
+    <script>
+        window.addEventListener('message', event => {
+            if (!(/yandex\.ru(:\d+)?$/.test(event.origin) ||
+                event.origin === 'https://yastatic.net')) {
+                return;
+            }
+            if (event.data.type !== 'Yandex.Apteki.externalMetrics') {
+                return;
+            }
+            var counter = event.data.counter;
+            var params = event.data.params;
+            switch (counter) {
+                case 'gtag':
+                    var callback = function () {
+                        if (typeof(params.callbackId) == 'undefined') {
+                            return;
+                        }
+                        try {
+                            event.source.postMessage({
+                                type: 'Yandex.Apteki.externalMetrics',
+                                ready: true,
+                                callbackId: params.callbackId
+                            }, 'https://yandex.ru');
+                        } catch(err) {
+                            console.error(err);
+                        }
+                    };
+                    gtag('event', 'conversion', {
+                        send_to: params.send_to,
+                        event_callback: callback
+                    });
+                    break;
+            }
+        });
+    </script>
+
+
+</body></html>
